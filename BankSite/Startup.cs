@@ -61,7 +61,7 @@ namespace BankSite
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public async void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -94,9 +94,10 @@ namespace BankSite
             IServiceScope serviceProvider = app.ApplicationServices.GetRequiredService<IServiceProvider>().CreateScope();
 
             // Create default roles
-            IdentityHelper.CreateRolesAsync(serviceProvider.ServiceProvider, IdentityHelper.AccountHolder, IdentityHelper.Manager);
+            await IdentityHelper.CreateRolesAsync(serviceProvider.ServiceProvider, IdentityHelper.AccountHolder, IdentityHelper.Manager);
 
             // Create default manager
+            await IdentityHelper.CreateDefaultUserAsync(serviceProvider.ServiceProvider, IdentityHelper.Manager);
         }
     }
 }
