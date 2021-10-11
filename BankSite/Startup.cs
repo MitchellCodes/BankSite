@@ -1,4 +1,5 @@
 using BankSite.Data;
+using BankSite.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -33,6 +34,7 @@ namespace BankSite
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
 
@@ -87,6 +89,14 @@ namespace BankSite
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+
+
+            IServiceScope serviceProvider = app.ApplicationServices.GetRequiredService<IServiceProvider>().CreateScope();
+
+            // Create default roles
+            IdentityHelper.CreateRolesAsync(serviceProvider.ServiceProvider, IdentityHelper.AccountHolder, IdentityHelper.Manager);
+
+            // Create default manager
         }
     }
 }
