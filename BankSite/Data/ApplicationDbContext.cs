@@ -1,4 +1,5 @@
 ﻿using BankSite.Models;
+using BankSite.Models.DbTables;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -13,5 +14,7 @@ namespace BankSite.Data
             : base(options)
         {
         }
+
+        public virtual DbSet<Account> Accounts { get; set; }
     }
 }
