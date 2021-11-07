@@ -16,5 +16,7 @@ namespace BankSite.Data
         }
 
         public virtual DbSet<Account> Accounts { get; set; }
+
+        public virtual DbSet<AccountType> AccountTypes { get; set; }
     }
 }

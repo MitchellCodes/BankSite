@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace BankSite.Models.DbTables
 {
-    public class Account
+    public class AccountType
     {
         [Key]
+        public int AccountTypeId { get; set; }
+
+        [ForeignKey("Account")]
         public int AccountId { get; set; }
 
-        [ForeignKey("ApplicationUser")]
-        public string UserId { get; set; }
-
-        public ApplicationUser ApplicationUser { get; set; }
+        public Account Account { get; set; }
     }
 }
