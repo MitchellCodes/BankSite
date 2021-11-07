@@ -16,5 +16,8 @@ namespace BankSite.Models.DbTables
         public int AccountId { get; set; }
 
         public Account Account { get; set; }
+
+        [Column(TypeName = "varchar(30)")]
+        public string TypeName { get; set; }
     }
 }
