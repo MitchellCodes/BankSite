@@ -14,5 +14,7 @@ namespace BankSite.Models.DbTables
 
         [Column(TypeName = "varchar(30)")]
         public string TypeName { get; set; }
+
+        public float InterestRate { get; set; }
     }
 }
