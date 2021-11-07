@@ -4,14 +4,16 @@ using BankSite.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BankSite.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211107040327_AddedAccountTypeTable")]
+    partial class AddedAccountTypeTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,10 +41,10 @@ namespace BankSite.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("varchar(75)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -97,18 +99,10 @@ namespace BankSite.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AccountTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Balance")
-                        .HasColumnType("money");
-
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("AccountId");
-
-                    b.HasIndex("AccountTypeId");
 
                     b.HasIndex("UserId");
 
@@ -122,10 +116,12 @@ namespace BankSite.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("TypeName")
-                        .HasColumnType("varchar(30)");
+                    b.Property<int>("AccountId")
+                        .HasColumnType("int");
 
                     b.HasKey("AccountTypeId");
+
+                    b.HasIndex("AccountId");
 
                     b.ToTable("AccountTypes");
                 });
@@ -267,19 +263,22 @@ namespace BankSite.Data.Migrations
 
             modelBuilder.Entity("BankSite.Models.DbTables.Account", b =>
                 {
-                    b.HasOne("BankSite.Models.DbTables.AccountType", "AccountType")
-                        .WithMany()
-                        .HasForeignKey("AccountTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("BankSite.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("Accounts")
                         .HasForeignKey("UserId");
 
-                    b.Navigation("AccountType");
-
                     b.Navigation("ApplicationUser");
+                });
+
+            modelBuilder.Entity("BankSite.Models.DbTables.AccountType", b =>
+                {
+                    b.HasOne("BankSite.Models.DbTables.Account", "Account")
+                        .WithMany()
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Account");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
