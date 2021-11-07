@@ -12,11 +12,6 @@ namespace BankSite.Models.DbTables
         [Key]
         public int AccountTypeId { get; set; }
 
-        [ForeignKey("Account")]
-        public int AccountId { get; set; }
-
-        public Account Account { get; set; }
-
         [Column(TypeName = "varchar(30)")]
         public string TypeName { get; set; }
     }

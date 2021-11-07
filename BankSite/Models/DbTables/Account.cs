@@ -15,6 +15,11 @@ namespace BankSite.Models.DbTables
         [ForeignKey("ApplicationUser")]
         public string UserId { get; set; }
 
+        [ForeignKey("AccountType")]
+        public int AccountTypeId { get; set; }
+
         public ApplicationUser ApplicationUser { get; set; }
+
+        public AccountType AccountType { get; set; }
     }
 }
