@@ -20,6 +20,7 @@ namespace BankSite.Models.DbTables
 
         public ApplicationUser ApplicationUser { get; set; }
 
+        [Display(Name = "Account Type")]
         public AccountType AccountType { get; set; }
 
         [Column(TypeName = "money")]
