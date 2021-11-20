@@ -26,4 +26,13 @@ namespace BankSite.Models.DbTables
         [Column(TypeName = "money")]
         public decimal Balance { get; set; }
     }
+
+    public class AccountCreateViewModel
+    {
+        public string UserId { get; set; }
+
+        public List<AccountType> AllAccountTypes { get; set; }
+
+        public int ChosenAccountTypeId { get; set; }
+    }
 }
