@@ -29,9 +29,6 @@ namespace BankSite.Models.DbTables
 
     public class AccountCreateViewModel
     {
-        [Required]
-        public string UserId { get; set; }
-
         public List<AccountType> AllAccountTypes { get; set; }
 
         public int ChosenAccountTypeId { get; set; }
