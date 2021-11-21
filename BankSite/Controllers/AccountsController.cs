@@ -7,16 +7,20 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BankSite.Data;
 using BankSite.Models.DbTables;
+using Microsoft.AspNetCore.Identity;
+using BankSite.Models;
 
 namespace BankSite.Controllers
 {
     public class AccountsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public AccountsController(ApplicationDbContext context)
+        public AccountsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Accounts
@@ -49,9 +53,10 @@ namespace BankSite.Controllers
         // GET: Accounts/Create
         public IActionResult Create()
         {
-            ViewData["AccountTypeId"] = new SelectList(_context.AccountTypes, "AccountTypeId", "AccountTypeId");
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
-            return View();
+            AccountCreateViewModel viewModel = new();
+            viewModel.UserId = _userManager.GetUserId(User);
+            viewModel.AllAccountTypes = _context.AccountTypes.ToList();
+            return View(viewModel);
         }
 
         // POST: Accounts/Create
@@ -59,16 +64,21 @@ namespace BankSite.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AccountId,UserId,AccountTypeId,Balance")] Account account)
+        public async Task<IActionResult> Create(AccountCreateViewModel account)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(account);
+                Account newAccount = new()
+                {
+                    UserId = account.UserId,
+                    AccountTypeId = account.ChosenAccountTypeId
+                };
+
+                _context.Add(newAccount);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AccountTypeId"] = new SelectList(_context.AccountTypes, "AccountTypeId", "AccountTypeId", account.AccountTypeId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", account.UserId);
+            account.AllAccountTypes = _context.AccountTypes.ToList();
             return View(account);
         }
 
