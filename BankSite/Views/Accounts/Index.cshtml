@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BankSite.Models.DbTables.Account>
+﻿@model IEnumerable<BankSite.Models.DbTables.AccountIndexViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -25,7 +25,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.AccountType.AccountTypeId)
+                @Html.DisplayFor(modelItem => item.AccountType)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Balance)
