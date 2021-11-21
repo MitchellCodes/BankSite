@@ -54,7 +54,6 @@ namespace BankSite.Controllers
         public IActionResult Create()
         {
             AccountCreateViewModel viewModel = new();
-            viewModel.UserId = _userManager.GetUserId(User);
             viewModel.AllAccountTypes = _context.AccountTypes.ToList();
             return View(viewModel);
         }
@@ -70,7 +69,7 @@ namespace BankSite.Controllers
             {
                 Account newAccount = new()
                 {
-                    UserId = account.UserId,
+                    UserId = _userManager.GetUserId(User),
                     AccountTypeId = account.ChosenAccountTypeId
                 };
 
