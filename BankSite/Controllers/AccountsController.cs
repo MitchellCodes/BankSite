@@ -26,8 +26,16 @@ namespace BankSite.Controllers
         // GET: Accounts
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Accounts.Include(a => a.AccountType).Include(a => a.ApplicationUser)
-                .Where( a => a.UserId == _userManager.GetUserId(User));
+            IQueryable<AccountIndexViewModel> applicationDbContext =
+                from account in _context.Accounts
+                join accountType in _context.AccountTypes on account.AccountTypeId equals accountType.AccountTypeId
+                where account.UserId == _userManager.GetUserId(User)
+                select new AccountIndexViewModel
+                {
+                    AccountId = account.AccountId,
+                    AccountType = accountType.TypeName,
+                    Balance = account.Balance
+                };
             return View(await applicationDbContext.ToListAsync());
         }
 
