@@ -33,4 +33,13 @@ namespace BankSite.Models.DbTables
 
         public int ChosenAccountTypeId { get; set; }
     }
+
+    public class AccountIndexViewModel
+    {
+        public int AccountId { get; set; }
+
+        public string AccountType { get; set; }
+
+        public decimal Balance { get; set; }
+    }
 }
