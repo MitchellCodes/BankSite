@@ -26,7 +26,8 @@ namespace BankSite.Controllers
         // GET: Accounts
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Accounts.Include(a => a.AccountType).Include(a => a.ApplicationUser);
+            var applicationDbContext = _context.Accounts.Include(a => a.AccountType).Include(a => a.ApplicationUser)
+                .Where( a => a.UserId == _userManager.GetUserId(User));
             return View(await applicationDbContext.ToListAsync());
         }
 
