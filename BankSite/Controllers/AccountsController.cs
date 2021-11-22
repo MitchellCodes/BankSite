@@ -180,5 +180,16 @@ namespace BankSite.Controllers
         {
             return _context.Accounts.Any(e => e.AccountId == id);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Deposit(int? id)
+        {
+            AccountDepositViewModel viewModel = new()
+            {
+                Account = await _context.Accounts.FindAsync(id)
+            };
+
+            return View(viewModel);
+        }
     }
 }
