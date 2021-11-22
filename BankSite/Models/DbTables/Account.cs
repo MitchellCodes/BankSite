@@ -45,7 +45,7 @@ namespace BankSite.Models.DbTables
 
     public class AccountDepositViewModel
     {
-        public Account Account { get; set; }
+        public int AccountId { get; set; }
 
         
         [Range(0.01, double.MaxValue, ErrorMessage = "Deposit amount must be greater than $0")]
