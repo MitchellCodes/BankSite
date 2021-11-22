@@ -184,12 +184,28 @@ namespace BankSite.Controllers
         [HttpGet]
         public async Task<IActionResult> Deposit(int? id)
         {
+            Account accountToEdit = await _context.Accounts.FirstAsync(a => a.AccountId == id);
             AccountDepositViewModel viewModel = new()
             {
-                Account = await _context.Accounts.FindAsync(id)
+                AccountId = accountToEdit.AccountId
             };
 
             return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Deposit(AccountDepositViewModel accountWithDeposit)
+        {
+            if (ModelState.IsValid)
+            {
+                Account account = await _context.Accounts.FindAsync(accountWithDeposit.AccountId);
+                account.Balance += accountWithDeposit.DepositAmount;
+                _context.Update(account);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(accountWithDeposit);
         }
     }
 }
