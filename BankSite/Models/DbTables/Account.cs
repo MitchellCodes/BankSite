@@ -42,4 +42,15 @@ namespace BankSite.Models.DbTables
 
         public decimal Balance { get; set; }
     }
+
+    public class AccountDepositViewModel
+    {
+        public int AccountId { get; set; }
+
+        
+        [Range(0.01, double.MaxValue, ErrorMessage = "Deposit amount must be greater than $0")]
+        [DataType(DataType.Currency)]
+        [Display(Name = "Deposit Amount")]
+        public decimal DepositAmount { get; set; }
+    }
 }

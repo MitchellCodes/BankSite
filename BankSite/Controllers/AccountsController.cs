@@ -180,5 +180,32 @@ namespace BankSite.Controllers
         {
             return _context.Accounts.Any(e => e.AccountId == id);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Deposit(int? id)
+        {
+            Account accountToEdit = await _context.Accounts.FirstAsync(a => a.AccountId == id);
+            AccountDepositViewModel viewModel = new()
+            {
+                AccountId = accountToEdit.AccountId
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Deposit(AccountDepositViewModel accountWithDeposit)
+        {
+            if (ModelState.IsValid)
+            {
+                Account account = await _context.Accounts.FindAsync(accountWithDeposit.AccountId);
+                account.Balance += accountWithDeposit.DepositAmount;
+                _context.Update(account);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(accountWithDeposit);
+        }
     }
 }
