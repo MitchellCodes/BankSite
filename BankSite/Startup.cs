@@ -38,6 +38,8 @@ namespace BankSite
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
 
+            services.AddTransient<IEmailProvider, EmailProviderSendGrid>();
+
             services.Configure<IdentityOptions>(options =>
             {
                 // Password settings.
