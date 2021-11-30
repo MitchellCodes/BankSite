@@ -98,8 +98,8 @@ namespace BankSite
             // Create default roles
             await IdentityHelper.CreateRolesAsync(serviceProvider.ServiceProvider, IdentityHelper.AccountHolder, IdentityHelper.Manager);
 
-            // Create default manager
-            await IdentityHelper.CreateDefaultUserAsync(serviceProvider.ServiceProvider, IdentityHelper.Manager);
+            //// Create default manager
+            //await IdentityHelper.CreateDefaultUserAsync(serviceProvider.ServiceProvider, IdentityHelper.Manager);
         }
     }
 }
