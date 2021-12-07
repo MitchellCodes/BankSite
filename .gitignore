@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/BankSite/Properties/ServiceDependencies/BankSite20211130062243 - Zip Deploy/mssql1.arm.json
+/BankSite/Properties/ServiceDependencies/BankSite20211130062243 - Zip Deploy/profile.arm.json
+/BankSite/Properties/serviceDependencies.BankSite20211130062243 - Zip Deploy.json
