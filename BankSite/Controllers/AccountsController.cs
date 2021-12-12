@@ -164,5 +164,20 @@ namespace BankSite.Controllers
 
             return View(viewModel);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Withdraw(AccountWithdrawViewModel accountWithWithdrawal)
+        {
+            if (ModelState.IsValid)
+            {
+                Account account = await _context.Accounts.FindAsync(accountWithWithdrawal.AccountId);
+                account.Balance -= accountWithWithdrawal.WithdrawAmount;
+                _context.Update(account);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(accountWithWithdrawal);
+        }
     }
 }
