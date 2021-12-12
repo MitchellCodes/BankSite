@@ -1,0 +1,34 @@
+﻿@model BankSite.Models.DbTables.AccountWithdrawViewModel
+
+@{
+    ViewData["Title"] = "Withdraw";
+}
+
+<h1>Withdraw</h1>
+
+<h4>Account</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Withdraw">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="AccountId" />
+            <div class="form-group">
+                <label asp-for="WithdrawAmount" class="control-label"></label>
+                <input asp-for="WithdrawAmount" class="form-control" />
+                <span asp-validation-for="WithdrawAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

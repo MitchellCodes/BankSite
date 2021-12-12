@@ -90,61 +90,6 @@ namespace BankSite.Controllers
             return View(account);
         }
 
-        // GET: Accounts/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var account = await _context.Accounts.FindAsync(id);
-            if (account == null)
-            {
-                return NotFound();
-            }
-            ViewData["AccountTypeId"] = new SelectList(_context.AccountTypes, "AccountTypeId", "AccountTypeId", account.AccountTypeId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", account.UserId);
-            return View(account);
-        }
-
-        // POST: Accounts/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("AccountId,UserId,AccountTypeId,Balance")] Account account)
-        {
-            if (id != account.AccountId)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(account);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!AccountExists(account.AccountId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["AccountTypeId"] = new SelectList(_context.AccountTypes, "AccountTypeId", "AccountTypeId", account.AccountTypeId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", account.UserId);
-            return View(account);
-        }
-
         // GET: Accounts/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -206,6 +151,33 @@ namespace BankSite.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(accountWithDeposit);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Withdraw(int? id)
+        {
+            Account accountToEdit = await _context.Accounts.FirstAsync(a => a.AccountId == id);
+            AccountWithdrawViewModel viewModel = new()
+            {
+                AccountId = accountToEdit.AccountId
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Withdraw(AccountWithdrawViewModel accountWithWithdrawal)
+        {
+            if (ModelState.IsValid)
+            {
+                Account account = await _context.Accounts.FindAsync(accountWithWithdrawal.AccountId);
+                account.Balance -= accountWithWithdrawal.WithdrawAmount;
+                _context.Update(account);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(accountWithWithdrawal);
         }
     }
 }
