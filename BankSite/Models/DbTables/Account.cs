@@ -53,4 +53,15 @@ namespace BankSite.Models.DbTables
         [Display(Name = "Deposit Amount")]
         public decimal DepositAmount { get; set; }
     }
+
+    public class AccountWithdrawViewModel
+    {
+        public int AccountId { get; set; }
+
+
+        [Range(0.01, double.MaxValue, ErrorMessage = "Withdraw amount must be greater than $0")]
+        [DataType(DataType.Currency)]
+        [Display(Name = "Withdraw Amount")]
+        public decimal WithdrawAmount { get; set; }
+    }
 }
