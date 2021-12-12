@@ -207,5 +207,17 @@ namespace BankSite.Controllers
             }
             return View(accountWithDeposit);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Withdraw(int? id)
+        {
+            Account accountToEdit = await _context.Accounts.FirstAsync(a => a.AccountId == id);
+            AccountWithdrawViewModel viewModel = new()
+            {
+                AccountId = accountToEdit.AccountId
+            };
+
+            return View(viewModel);
+        }
     }
 }
