@@ -8,6 +8,10 @@ using System.Threading.Tasks;
 
 namespace BankSite.Models
 {
+    /// <summary>
+    /// An extension of IdentityUser that stores first and last name separately.
+    /// Also stores a list of Accounts that the user has created.
+    /// </summary>
     public class ApplicationUser : IdentityUser
     {
         [Column(TypeName = "varchar(50)")]

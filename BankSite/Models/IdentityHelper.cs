@@ -12,6 +12,12 @@ namespace BankSite.Models
         public const string AccountHolder = "AccountHolder";
         public const string Manager = "Manager";
 
+        /// <summary>
+        /// Turns the given strings into IdentityRoles
+        /// </summary>
+        /// <param name="provider">An IServiceProvider to provide access to RoleManager</param>
+        /// <param name="roles">The roles to add</param>
+        /// <returns></returns>
         public static async Task CreateRolesAsync(IServiceProvider provider, params string[] roles)
         {
             RoleManager<IdentityRole> roleManager = provider.GetService<RoleManager<IdentityRole>>();

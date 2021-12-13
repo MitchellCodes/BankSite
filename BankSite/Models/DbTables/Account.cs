@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace BankSite.Models.DbTables
 {
+    /// <summary>
+    /// A bank account that can be created by an ApplicationUser.
+    /// Users can have many accounts of different types.
+    /// </summary>
     public class Account
     {
         [Key]
@@ -27,6 +31,9 @@ namespace BankSite.Models.DbTables
         public decimal Balance { get; set; }
     }
 
+    /// <summary>
+    /// A view model to be used on the Accounts/Create view.
+    /// </summary>
     public class AccountCreateViewModel
     {
         public List<AccountType> AllAccountTypes { get; set; }
@@ -34,15 +41,22 @@ namespace BankSite.Models.DbTables
         public int ChosenAccountTypeId { get; set; }
     }
 
+    /// <summary>
+    /// A view model to be used on the Accounts/Index view.
+    /// </summary>
     public class AccountIndexViewModel
     {
         public int AccountId { get; set; }
 
+        [Display(Name = "Account Type")]
         public string AccountType { get; set; }
 
         public decimal Balance { get; set; }
     }
 
+    /// <summary>
+    /// A view model to be used on the Accounts/Deposit view.
+    /// </summary>
     public class AccountDepositViewModel
     {
         public int AccountId { get; set; }
@@ -54,6 +68,9 @@ namespace BankSite.Models.DbTables
         public decimal DepositAmount { get; set; }
     }
 
+    /// <summary>
+    /// A view model to be used on the Accounts/Withdraw view.
+    /// </summary>
     public class AccountWithdrawViewModel
     {
         public int AccountId { get; set; }
