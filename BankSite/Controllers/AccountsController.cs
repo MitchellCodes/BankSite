@@ -39,26 +39,6 @@ namespace BankSite.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Accounts/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var account = await _context.Accounts
-                .Include(a => a.AccountType)
-                .Include(a => a.ApplicationUser)
-                .FirstOrDefaultAsync(m => m.AccountId == id);
-            if (account == null)
-            {
-                return NotFound();
-            }
-
-            return View(account);
-        }
-
         // GET: Accounts/Create
         public IActionResult Create()
         {
