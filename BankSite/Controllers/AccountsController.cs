@@ -106,6 +106,10 @@ namespace BankSite.Controllers
             return _context.Accounts.Any(e => e.AccountId == id);
         }
 
+        /// <summary>
+        /// Gets the Account with the id that was passed from the view.
+        /// </summary>
+        /// <param name="id">The id of the Account to deposit into.</param>
         [HttpGet]
         public async Task<IActionResult> Deposit(int? id)
         {
@@ -118,6 +122,11 @@ namespace BankSite.Controllers
             return View(viewModel);
         }
 
+        /// <summary>
+        /// Updates the Account with the same id as the one passed in the view model
+        /// and adds the DepositAmount to the balance.
+        /// </summary>
+        /// <param name="accountWithDeposit">A view model containing an AccountId and DepositAmount</param>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Deposit(AccountDepositViewModel accountWithDeposit)
@@ -133,6 +142,10 @@ namespace BankSite.Controllers
             return View(accountWithDeposit);
         }
 
+        /// <summary>
+        /// Gets the Account with the id that was passed from the view.
+        /// </summary>
+        /// <param name="id">The id of the Account to withdraw from.</param>
         [HttpGet]
         public async Task<IActionResult> Withdraw(int? id)
         {
@@ -145,6 +158,12 @@ namespace BankSite.Controllers
             return View(viewModel);
         }
 
+        /// <summary>
+        /// Updates the Account with the same id as the one passed in the view model
+        /// and removes the WithdrawAmount from the balance. Cannot withdraw more than
+        /// the current balance of the account.
+        /// </summary>
+        /// <param name="accountWithWithdrawal">A view model containing the AccountId and WithdrawAmount</param>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Withdraw(AccountWithdrawViewModel accountWithWithdrawal)
