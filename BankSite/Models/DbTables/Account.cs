@@ -48,6 +48,7 @@ namespace BankSite.Models.DbTables
     {
         public int AccountId { get; set; }
 
+        [Display(Name = "Account Type")]
         public string AccountType { get; set; }
 
         public decimal Balance { get; set; }
