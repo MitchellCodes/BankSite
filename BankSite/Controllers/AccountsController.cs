@@ -152,7 +152,14 @@ namespace BankSite.Controllers
             if (ModelState.IsValid)
             {
                 Account account = await _context.Accounts.FindAsync(accountWithWithdrawal.AccountId);
+                decimal currentBalance = account.Balance;
                 account.Balance -= accountWithWithdrawal.WithdrawAmount;
+                if (account.Balance < 0)
+                {
+                    ModelState.AddModelError(nameof(AccountWithdrawViewModel.WithdrawAmount),
+                        "Cannot withdraw more than balance. Current balance is " + currentBalance.ToString("C"));
+                    return View(accountWithWithdrawal);
+                }
                 _context.Update(account);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
