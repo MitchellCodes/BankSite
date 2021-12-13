@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace BankSite.Models.DbTables
 {
+    /// <summary>
+    /// A type of bank account.
+    /// Each account can only have one type.
+    /// </summary>
     public class AccountType
     {
         [Key]
