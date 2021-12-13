@@ -23,6 +23,7 @@ namespace BankSite.Data
         {
             base.OnModelCreating(builder);
             builder.Entity<Account>().Property(a => a.Balance).HasDefaultValue(0);
+            builder.Entity<Account>().HasOne<ApplicationUser>(a => a.ApplicationUser).WithMany().OnDelete(DeleteBehavior.Cascade);
             builder.Entity<AccountType>().HasData(
                 new AccountType { AccountTypeId = 1, TypeName = "Checking", InterestRate = .03f},
                 new AccountType { AccountTypeId = 2, TypeName = "Savings", InterestRate = .06f},
